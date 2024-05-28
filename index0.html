@@ -9,6 +9,10 @@
       color: red;
       display: none;
     }
+    .Button
+    {
+      cursor:pointer;
+    }
   </style>
 </head>
 <body>
@@ -125,7 +129,54 @@
   <div id="downleft">Copyright @ 2024, Cyclerestore Services. All Rights Reserved.</div>
 </div>
  
-<script>
+  <script>
+    document.getElementById('Pincode').addEventListener('input', validatePincode);
+      // const scriptURL = 'https://script.google.com/macros/s/AKfycbwxrr9gY3hHl86SuG0uv8nQa0NJHnmqFYqzCzrqM0w4wWDuE-B--j9r9iwch5FHZK6o/exec'
+      var btn1 = document.querySelector(".Button");
+      var form = document.querySelector('.contact-form');
+      btn1.addEventListener('click', function(event) {
+    event.preventDefault();
+    action1();
+    action2();
+    action3();
+   
+});
+    
+ 
+    
+    function action3() {
+      window.location.href = "index1.html";
+    }
+
+    function action1(){
+
+         var name = document.getElementById("Name").value;
+         localStorage.setItem('name', name);
+         localStorage.setItem('brand',document.getElementById('Brand').value);
+         localStorage.setItem('cycle', document.getElementById('cycle').value);
+         localStorage.setItem('pin', document.getElementById('Pincode').value);
+         localStorage.setItem('city', document.getElementById('city').value);
+         localStorage.setItem('address', document.getElementById('Address').value);
+         localStorage.setItem('phone', document.getElementById('Phone').value);
+         localStorage.setItem('email', document.getElementById('Email').value);
+
+         var formData = new FormData(); // Use new keyword
+         formData.append('city', document.getElementById('city').value);
+         formData.append('Pincode', document.getElementById('Pincode').value);
+         formData.append('Brand', document.getElementById('Brand').value);
+         formData.append('cycle',  document.getElementById('cycle').value);
+         formData.append('Name', name);
+         formData.append('Email', document.getElementById('Email').value );
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzd6UAxAv2ahIrabGQLdXoZgCpNxm1V6USHK7v7-zrH12Vi17pn3N8DhfeJORZqaMa-/exec';
+       fetch(scriptURL, { method: 'POST', body : formData })  
+       .then()
+       .catch(error => console.error('Error!', error.message))
+          
+    }
+
+    
+
+ 
 const validPincodes = {
   Visakhapatnam: ["530001", "530002", "530003", "530004", "530005", "530007", "530008", "530009", "530011", "530012", "530013", "530014", "530015", "530016", "530017", "530018", "530020", "530022", "53024"],
   Vijayawada: ["520002", "520003", "520004", "520005", "520006", "520007", "520008", "520009", "520010", "520011", "520012", "520013", "520014", "520015", "520016", "521104", "521107", "521108", "521134", "521137"],
@@ -138,21 +189,22 @@ const validPincodes = {
   Anantapur: ["515001", "515002", "515003", "515004", "515005", "515006", "515007", "515008", "515009", "515010", "515011", "515012", "515013", "515014", "515015", "515016", "515017", "515018", "515019", "515020"],
   Eluru: ["534001", "534002", "534003", "534004", "534005", "534006", "534007", "534008", "534009", "534010", "534011", "534012", "534013", "534014", "534015", "534016", "534017", "534018", "534019", "534020"]
 };
+function validatePincode() {
+        const city = document.getElementById('city').value;
+        const pincode = document.getElementById('Pincode').value;
+        const pincodeError = document.getElementById('pincode-error');
 
-document.querySelector('form').addEventListener('submit', function(event) {
-  const city = document.getElementById('city').value;
-  const pincode = document.getElementById('Pincode').value;
-  const pincodeError = document.getElementById('pincode-error');
-
-  if (city && pincode) {
-    if (!validPincodes[city].includes(pincode)) {
-      pincodeError.style.display = 'block';
-      event.preventDefault();
-    } else {
-      pincodeError.style.display = 'none';
-    }
-  }
-});
-</script>
-</body>
-</html>
+        if (city && pincode) {
+          if (!validPincodes[city] || !validPincodes[city].includes(pincode)) {
+            pincodeError.style.display = 'block';
+            pincodeError.innerText = "Enter a valid pincode for the specified city.";
+          } else {
+            pincodeError.style.display = 'none';
+            pincodeError.innerText = "";
+          }
+        }
+      }
+ 
+    </script>
+    </body>
+    </html>
