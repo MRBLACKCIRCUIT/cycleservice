@@ -53,7 +53,7 @@
     </tr>
   </table><br>
   <form name="contact-form" align="center">
-    <select name="city" id="city">
+    <select name="city" id="city" required>
       <option value="">City</option>
       <option value="Visakhapatnam">Visakhapatnam</option>
       <option value="Vijayawada">Vijayawada</option>
@@ -66,18 +66,18 @@
       <option value="Anantapur">Anantapur</option>
       <option value="Eluru">Eluru</option>
     </select><br><br>
-    <input type="text" name="Pincode" id="Pincode" value="" placeholder="Pincode" size="40"><br><br>
+    <input type="text" name="Pincode" id="Pincode" value="" placeholder="Pincode" size="40" required><br><br>
     <span class="error" id="pincode-error">Enter a valid pincode</span><br>
-    <input type="text" name="Brand" id="Brand" placeholder="Brand" value="" size="40"><br><br>
-    <select name="cycle" id="cycle">
+    <input type="text" name="Brand" id="Brand" placeholder="Brand" value="" size="40" required><br><br>
+    <select name="cycle" id="cycle" required>
       <option value="">Type of cycle</option>
       <option value="Geared">Geared</option>
       <option value="Non-Geared">Non-Geared</option>
     </select><br><br>
-    <input type="text" value="" placeholder="Name" name="Name" id="Name" size="40"><br><br>
-    <input type="email" value="" placeholder="Email" name="Email" id="Email" size="40"><br><br>
-    <input type="text" value="" placeholder="Phone" name="Phone" id="Phone" size="40"><br><br>
-    <input type="text" value="" placeholder="Address" name="Address" id="Address" size="40"><br>
+    <input type="text" value="" placeholder="Name" name="Name" id="Name" size="40" required><br><br>
+    <input type="email" value="" placeholder="Email" name="Email" id="Email" size="40" required><br><br>
+    <input type="text" value="" placeholder="Phone" name="Phone" id="Phone" size="40" required><br><br>
+    <input type="text" value="" placeholder="Address" name="Address" id="Address" size="40" required><br>
     <button type="submit" class="Button" name="Button">Submit</button>
   </form><br>
   <table id="ser">
