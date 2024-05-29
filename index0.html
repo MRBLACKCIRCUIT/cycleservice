@@ -9,15 +9,13 @@
       color: red;
       display: none;
     }
-    .Button
-    {
-      cursor:pointer;
+    .Button {
+      cursor: pointer;
     }
-      #pincode-error
-    {
+    #pincode-error {
       font-family: 'Courier New', Courier, monospace;
       font-size: 14px;
-      color:rgb(65, 195, 76);
+      color: rgb(65, 195, 76);
     }
   </style>
 </head>
@@ -52,7 +50,7 @@
       <td><a style="text-decoration:none;" href="index3.html">Summary</a></td>
     </tr>
   </table><br>
-  <form name="contact-form" align="center">
+  <form name="contact-form" align="center" class="contact-form" onsubmit="return handleSubmit(event)">
     <select name="city" id="city" required>
       <option value="">City</option>
       <option value="Visakhapatnam">Visakhapatnam</option>
@@ -136,81 +134,141 @@
 </div>
  
   <script>
+    var set = 0;
     document.getElementById('Pincode').addEventListener('input', validatePincode);
-      // const scriptURL = 'https://script.google.com/macros/s/AKfycbwxrr9gY3hHl86SuG0uv8nQa0NJHnmqFYqzCzrqM0w4wWDuE-B--j9r9iwch5FHZK6o/exec'
-      var btn1 = document.querySelector(".Button");
-      var form = document.querySelector('.contact-form');
-      btn1.addEventListener('click', function(event) {
-    event.preventDefault();
-    action1();
-    // action2();
-    action3();
-   
-});
-    
- 
-    
+
+    var btn1 = document.querySelector(".Button");
+    var form = document.querySelector('.contact-form');
+    btn1.addEventListener('click', function(event) {
+      event.preventDefault();
+      if (action2() && set === 1) {
+        action1();
+        action3();
+      }
+    });
+
     function action3() {
-      window.location.href = "index1.html";
-    }
-
-    function action1(){
-
-         var name = document.getElementById("Name").value;
-         localStorage.setItem('name', name);
-         localStorage.setItem('brand',document.getElementById('Brand').value);
-         localStorage.setItem('cycle', document.getElementById('cycle').value);
-         localStorage.setItem('pin', document.getElementById('Pincode').value);
-         localStorage.setItem('city', document.getElementById('city').value);
-         localStorage.setItem('address', document.getElementById('Address').value);
-         localStorage.setItem('phone', document.getElementById('Phone').value);
-         localStorage.setItem('email', document.getElementById('Email').value);
-
-         var formData = new FormData(); // Use new keyword
-         formData.append('city', document.getElementById('city').value);
-         formData.append('Pincode', document.getElementById('Pincode').value);
-         formData.append('Brand', document.getElementById('Brand').value);
-         formData.append('cycle',  document.getElementById('cycle').value);
-         formData.append('Name', name);
-         formData.append('Email', document.getElementById('Email').value );
+      const formData = new FormData(document.querySelector('.contact-form'));
       const scriptURL = 'https://script.google.com/macros/s/AKfycbzd6UAxAv2ahIrabGQLdXoZgCpNxm1V6USHK7v7-zrH12Vi17pn3N8DhfeJORZqaMa-/exec';
-       fetch(scriptURL, { method: 'POST', body : formData })  
-       .then()
-       .catch(error => console.error('Error!', error.message))
-          
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = "index1.html";
+          } else {
+            throw new Error('Network response was not ok.');
+          }
+        })
+        .catch(error => console.error('Error!', error.message));
     }
 
-    
+    function action1() {
+      const name = document.getElementById('Name').value;
+      const formData = new FormData(); 
+      formData.append('city', document.getElementById('city').value);
+      formData.append('Pincode', document.getElementById('Pincode').value);
+      formData.append('Brand', document.getElementById('Brand').value);
+      formData.append('cycle', document.getElementById('cycle').value);
+      formData.append('Name', document.getElementById('Name').value);
+      formData.append('phone', document.getElementById('Phone').value);
+      formData.append('Email', document.getElementById('Email').value);
+      localStorage.setItem('name', name);
+      localStorage.setItem('brand', document.getElementById('Brand').value);
+      localStorage.setItem('cycle', document.getElementById('cycle').value);
+      localStorage.setItem('pin', document.getElementById('Pincode').value);
+      localStorage.setItem('city', document.getElementById('city').value);
+      localStorage.setItem('address', document.getElementById('Address').value);
+      localStorage.setItem('phone', document.getElementById('Phone').value);
+      localStorage.setItem('email', document.getElementById('Email').value);
+    }
 
- 
-const validPincodes = {
-  Visakhapatnam: ["530001", "530002", "530003", "530004", "530005", "530007", "530008", "530009", "530011", "530012", "530013", "530014", "530015", "530016", "530017", "530018", "530020", "530022", "53024"],
-  Vijayawada: ["520002", "520003", "520004", "520005", "520006", "520007", "520008", "520009", "520010", "520011", "520012", "520013", "520014", "520015", "520016", "521104", "521107", "521108", "521134", "521137"],
-  Guntur: ["522001", "522002", "522003", "522004", "522005", "522006", "522007", "522008", "522009", "522010", "522011", "522012", "522013", "522014", "522015", "522016", "522017", "522018", "522019", "522020"],
-  Nellore: ["524001", "524002", "524003", "524004", "524005", "524006", "524007", "524008", "524009", "524010", "524011", "524012", "524013", "524014", "524015", "524016", "524017", "524018", "524019", "524020"],
-  Kurnool: ["518001", "518002", "518003", "518004", "518005", "518006", "518007", "518008", "518009", "518010", "518011", "518012", "518013", "518014", "518015", "518016", "518017", "518018", "518019", "518020"],
-  Rajahmundry: ["533101", "533102", "533103", "533104", "533105", "533106", "533107", "533108", "533109", "533110", "533111", "533112", "533113", "533114", "533115", "533116", "533117", "533118", "533119", "533120"],
-  Tirupati: ["517501", "517502", "517503", "517504", "517505", "517506", "517507", "517508", "517509", "517510", "517511", "517512", "517513", "517514", "517515", "517516", "517517", "517518", "517519", "517520"],
-  Kakinada: ["533001", "533002", "533003", "533004", "533005", "533006", "533007", "533008", "533009", "533010", "533011", "533012", "533013", "533014", "533015", "533016", "533017", "533018", "533019", "533020"],
-  Anantapur: ["515001", "515002", "515003", "515004", "515005", "515006", "515007", "515008", "515009", "515010", "515011", "515012", "515013", "515014", "515015", "515016", "515017", "515018", "515019", "515020"],
-  Eluru: ["534001", "534002", "534003", "534004", "534005", "534006", "534007", "534008", "534009", "534010", "534011", "534012", "534013", "534014", "534015", "534016", "534017", "534018", "534019", "534020"]
-};
-function validatePincode() {
-        const city = document.getElementById('city').value;
-        const pincode = document.getElementById('Pincode').value;
-        const pincodeError = document.getElementById('pincode-error');
+    function action2() {
+      const city = document.getElementById('city').value.trim();
+      const pin = document.getElementById('Pincode').value.trim();
+      const brand = document.getElementById('Brand').value.trim();
+      const cycle = document.getElementById('cycle').value.trim();
+      const name = document.getElementById('Name').value.trim();
+      const phone = document.getElementById('Phone').value.trim();
+      const email = document.getElementById('Email').value.trim();
 
-        if (city && pincode) {
-          if (!validPincodes[city] || !validPincodes[city].includes(pincode)) {
-            pincodeError.style.display = 'block';
-            pincodeError.innerText = "Enter a valid pincode for the specified city.";
-          } else {
-            pincodeError.style.display = 'none';
-            pincodeError.innerText = "";
-          }
+      if (city === "") {
+        alert("City is required");
+        return false;
+      }
+
+      if (pin === "") {
+        alert("Pincode is required");
+        return false;
+      }
+
+      if (brand === "") {
+        alert("Brand is required");
+        return false;
+      }
+
+      if (cycle === "") {
+        alert("Cycle type is required");
+        return false;
+      }
+
+      if (name === "") {
+        alert("Name is required");
+        return false;
+      }
+
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone)) {
+        alert("Please enter a valid 10-digit phone number");
+        return false;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address");
+        return false;
+      }
+
+      return true;
+    }
+
+    const validPincodes = {
+      Visakhapatnam: ["530001", "530002", "530003", "530004", "530005", "530007", "530008", "530009", "530011", "530012", "530013", "530014", "530015", "530016", "530017", "530018", "530020", "530022", "53024"],
+      Vijayawada: ["520002", "520003", "520004", "520005", "520006", "520007", "520008", "520009", "520010", "520011", "520012", "520013", "520014", "520015", "520016", "521104", "521107", "521108", "521134", "521137"],
+      Guntur: ["522001", "522002", "522003", "522004", "522005", "522006", "522007", "522008", "522009", "522010", "522011", "522012", "522013", "522014", "522015", "522016", "522017", "522018", "522019", "522020"],
+      Nellore: ["524001", "524002", "524003", "524004", "524005", "524006", "524007", "524008", "524009", "524010", "524011", "524012", "524013", "524014", "524015", "524016", "524017", "524018", "524019", "524020"],
+      Kurnool: ["518001", "518002", "518003", "518004", "518005", "518006", "518007", "518008", "518009", "518010", "518011", "518012", "518013", "518014", "518015", "518016", "518017", "518018", "518019", "518020"],
+      Rajahmundry: ["533101", "533102", "533103", "533104", "533105", "533106", "533107", "533108", "533109", "533110", "533111", "533112", "533113", "533114", "533115", "533116", "533117", "533118", "533119", "533120"],
+      Tirupati: ["517501", "517502", "517503", "517504", "517505", "517506", "517507", "517508", "517509", "517510", "517511", "517512", "517513", "517514", "517515", "517516", "517517", "517518", "517519", "517520"],
+      Kakinada: ["533001", "533002", "533003", "533004", "533005", "533006", "533007", "533008", "533009", "533010", "533011", "533012", "533013", "533014", "533015", "533016", "533017", "533018", "533019", "533020"],
+      Anantapur: ["515001", "515002", "515003", "515004", "515005", "515006", "515007", "515008", "515009", "515010", "515011", "515012", "515013", "515014", "515015", "515016", "515017", "515018", "515019", "515020"],
+      Eluru: ["534001", "534002", "534003", "534004", "534005", "534006", "534007", "534008", "534009", "534010", "534011", "534012", "534013", "534014", "534015", "534016", "534017", "534018", "534019", "534020"]
+    };
+
+    function validatePincode() {
+      const city = document.getElementById('city').value;
+      const pincode = document.getElementById('Pincode').value;
+      const pincodeError = document.getElementById('pincode-error');
+
+      if (city && pincode) {
+        if (!validPincodes[city] || !validPincodes[city].includes(pincode)) {
+          pincodeError.style.display = 'block';
+          pincodeError.innerText = "Enter a valid pincode for the specified city.";
+          set = 0;
+        } else {
+          pincodeError.style.display = 'none';
+          pincodeError.innerText = "";
+          set = 1;
         }
       }
- 
-    </script>
-    </body>
-    </html>
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      if (validatePincode() && action2() && set === 1) {
+        action1();
+        action3();
+      }
+    }
+  </script>
+</body>
+</html>
